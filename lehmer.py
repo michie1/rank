@@ -3,6 +3,17 @@ from math import floor, factorial
 fac = []
 
 def nthTrue(S, n):
+	j = -1 # first found is called the 0st # aantal true
+	i = -1
+	while j < n:
+		i += 1
+		if S[i]:
+			j += 1
+
+	S[i] = False
+	return i
+	#print i
+	"""
 	j = 0
 	for i in range(0, len(S)):
 		if S[i]:
@@ -10,6 +21,7 @@ def nthTrue(S, n):
 			if j > n:
 				S[i] = False
 				return i
+	"""
 
 def unrank(N, K, r):
 	S = [True] * N;
@@ -48,7 +60,7 @@ def main():
 	print 'Lehmer Code'
 
 	N = 4
-	K = 2
+	K = 3
 
 	fac.append(1)
 	fac.append(1)
@@ -69,15 +81,20 @@ def main():
 		#	print index, '\t', perm, '\t', r
 		#	break
 
+	S = [1, 0, 0, 1, 1, 0, 1, 1]
+
 	"""
-	S = [True] * 4
-	print nthTrue(4, S, 1)
-	print nthTrue(4, S, 1)
-	print nthTrue(4, S, 0)
-	print nthTrue(4, S, 0)
+	for i, b in enumerate(S):
+		if b:
+			aantal_true += 1
+			if aantal_true == 2:
+				print i
+				break
 	"""
 
+	#print aantal_true
 
+	print 
 	print 'done'
 
 if __name__ == "__main__":
