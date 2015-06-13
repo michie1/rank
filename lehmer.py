@@ -1,7 +1,5 @@
 from math import floor
 
-fac = []
-
 # find the m-th true boolean and return its index
 def mthTrue(S, m):
 	j = -1 # first found is called the 0st # aantal true
@@ -50,10 +48,12 @@ def main():
 	K = 2 # Permutation length
 
 	# Precalculate faculty
-	fac.append(1)
-	fac.append(1)
+	global fac
+	fac = [0] * (N+1)
+	fac[0] = 1
+	fac[1] = 1
 	for i in range(2, N+1):
-		fac.append(i * fac[i-1]) 
+		fac[i] = i * fac[i-1]
 
 	# Loop thru all permutations and test rank/unrank
 	for index in range(0, fac[N]/fac[N-K]):
