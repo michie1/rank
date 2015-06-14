@@ -23,15 +23,13 @@ def mthTrue_reverse(S, i):
 	S[i] = False
 	return m
 
-def unrank(N, K, r):
+def unrank(N, K, r, perm):
 	S = [True] * N;
 	n = N
-	result = [-1] * K
 	for k in range(0, K):
-		result[k] = mthTrue(S, int(r % n))
+		perm[k] = mthTrue(S, int(r % n))
 		r = floor(r/n)
 		n -= 1
-	return result
 
 def rank(N, K, perm):
 	S = [True] * N;
@@ -57,7 +55,8 @@ def main():
 
 	# Loop thru all permutations and test rank/unrank
 	for index in range(0, fac[N]/fac[N-K]):
-		perm = unrank(N, K, index)
+		perm = [-1] * K
+		unrank(N, K, index, perm)
 		r = rank(N, K, perm)
 		print index, '\t', perm, '\t', r
 
