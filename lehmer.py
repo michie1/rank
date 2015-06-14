@@ -31,11 +31,11 @@ def unrank(N, K, r, perm):
 
 def rank(N, K, perm):
 	S = [True] * N;
-	index = 0
+	r = 0
 	for k in range(0, K):
-		index += mthTrue_reverse(S, perm[k]) * (fac[N]/fac[N-k])
+		r += mthTrue_reverse(S, perm[k]) * (fac[N]/fac[N-k])
 
-	return index
+	return r
 
 def main():
 	print 'Lehmer Code'
