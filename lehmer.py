@@ -25,11 +25,9 @@ def mthTrue_reverse(S, i):
 
 def unrank(N, K, r, perm):
 	S = [True] * N;
-	n = N
 	for k in range(0, K):
-		perm[k] = mthTrue(S, int(r % n))
-		r = floor(r/n)
-		n -= 1
+		perm[k] = mthTrue(S, int(r % (N-k)))
+		r = floor(r/(N-k))
 
 def rank(N, K, perm):
 	S = [True] * N;
