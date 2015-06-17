@@ -8,7 +8,6 @@ def mthTrue(S, m):
 		i += 1
 		if S[i]:
 			j += 1
-			
 	S[i] = False
 	return i
 
@@ -24,10 +23,17 @@ def mthTrue_reverse(S, i):
 	return m
 
 def unrank(N, K, r, perm):
-	S = [True] * N;
-	for k in range(0, K):
-		perm[k] = mthTrue(S, int(r % (N-k)))
-		r = floor(r/(N-k))
+	#S = [True] * N
+        perm_index = [0] * K
+        #perm= [0] * K
+
+        for k in range(0, K):
+            perm_index[k] = int(r % (N-k))
+            perm[k] = perm_index[k]
+            for q in range(0, k):
+                if perm_index[q] <= perm_index[k]:
+                    perm[k] += 1
+            r = floor(r/(N-k))
 
 def rank(N, K, perm):
 	S = [True] * N;
@@ -40,8 +46,8 @@ def rank(N, K, perm):
 def main():
 	print 'Lehmer Code'
 
-	N = 4 # Every digit in range [0, N-1]
-	K = 2 # Permutation length
+	N = 7 # Every digit in range [0, N-1]
+	K = 3 # Permutation length
 
 	# Precalculate faculty
 	global fac
