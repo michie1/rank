@@ -1,47 +1,40 @@
 from math import floor
-
-# find the m-th true boolean and return its index
-def mthTrue(S, m):
-	j = -1 # first found is called the 0st # aantal true
-	i = -1
-	while j < m:
-		i += 1
-		if S[i]:
-			j += 1
-	S[i] = False
-	return i
-
-# find index i and return which m-th true it is
-# Assume S[i] is always True
-def mthTrue_reverse(S, i):
-	m = 0	# first found is called the 0st
-	for j in range(0, i):
-		if S[j]:
-			m += 1
-
-	S[i] = False
-	return m
-
 def unrank(N, K, r, perm):
-	#S = [True] * N
         perm_index = [0] * K
-        #perm= [0] * K
 
         for k in range(0, K):
             perm_index[k] = int(r % (N-k))
             perm[k] = perm_index[k]
-            for q in range(0, k):
-                if perm_index[q] <= perm_index[k]:
+            for i in range(0, k):
+                if perm_index[i] <= perm_index[k]:
                     perm[k] += 1
             r = floor(r/(N-k))
 
 def rank(N, K, perm):
-	S = [True] * N;
-	r = 0
-	for k in range(0, K):
-		r += mthTrue_reverse(S, perm[k]) * (fac[N]/fac[N-k])
 
-	return r
+    r = perm[0]
+    for k in range(1, K)[::-1]:
+        #perm_index[k] = perm[k]
+        r += perm[k] * fac[N]/fac[N-k]
+        for i in range(0, k):
+            if perm[i] < perm[k]:
+                #perm_index[k] -= 1
+                r -= fac[N]/fac[N-k]
+
+        #r += perm_index[k] * fac[N]/fac[N-k]
+    """
+    perm_index = [0] * K
+    r = perm[0]
+    for k in range(1, K)[::-1]:
+        perm_index[k] = perm[k]
+        for i in range(0, k):
+            if perm[i] < perm[k]:
+                perm_index[k] -= 1
+
+        r += perm_index[k] * fac[N]/fac[N-k]
+    """
+
+    return r
 
 def main():
 	print 'Lehmer Code'
