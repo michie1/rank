@@ -1,6 +1,5 @@
 from math import floor
 
-"""
 factorial = [
    1,
    26,
@@ -22,6 +21,7 @@ factorial = [
     7731052560,
     316973154960
 ]
+"""
 
 skip_right = [
     0,   1,  2,
@@ -67,51 +67,53 @@ use_dens = [
 def unrank(N, K, r, perm):
     perm_index = [0] * K
     
-    #perm_index[0] = int(r % 26)
-    #r = floor(r/26)
-    #perm[0] = perm_index[0]
-    #perm[0] = skip_right[perm[0]]
+    perm_index[0] = int(r % 26)
+    r = floor(r/26)
+    perm[0] = perm_index[0]
+    perm[0] = skip_right[perm[0]]
     
     #perm_index[0] = int(r % 47)
     #r = floor(r/47)
     #perm[0] = perm_index[0]
 
-    for k in range(0, K):
+    #for k in range(0, K):
+    for k in range(1, K):
         perm_index[k] = int(r % (N-k))
         r = floor(r/(N-k))
 
-    for k in range(0, K):
+    #for k in range(0, K):
+    for k in range(1, K):
         perm[k] = perm_index[k]
 	for i in range(0, k)[::-1]:
             #if perm_index[i] <= perm_index[k]:
             if perm_index[i] <= perm[k]:
                 perm[k] += 1
-        #perm[k] = skip_dens[perm[k]]
+        perm[k] = skip_dens[perm[k]]
 
     #print 'perm_index: ', perm_index
     #print 'perm: ', perm
 
 
 def rank(N, K, perm):
-    #perm[0] = use_right[perm[0]]
+    perm[0] = use_right[perm[0]]
     r = perm[0]
-    #for k in range(1, K):
-    #    perm[k] = use_dens[perm[k]]
+    for k in range(1, K):
+        perm[k] = use_dens[perm[k]]
 
     for k in range(1, K)[::-1]:
         q = perm[k]
         for i in range(0, k):
             if perm[i] < perm[k]:
                 q -= 1
-        #r += q * factorial[k]
-        r += q * fac[N]/fac[N-k]
+        r += q * factorial[k]
+        #r += q * fac[N]/fac[N-k]
     return r
 
 def main():
     print 'Jungle Checkers ranking'
 
     N = 47 # Every digit in range [0, N-1]
-    K = 3 # Permutation length
+    K = 4 # Permutation length
 
     # Precalculate faculty
     global fac
@@ -124,12 +126,16 @@ def main():
 
     # Loop thru all permutations and test rank/unrank
     #"""
-    #for index in range(0, factorial[K]-1):
-    for index in range(0, fac[N]/fac[N-K]-1):
+    """
+    for index in range(0, factorial[K]-1):
+    #for index in range(0, fac[N]/fac[N-K]-1):
         perm = [-1] * K
         unrank(N, K, index, perm)
         r = rank(N, K, perm)
         if index != r:
+            print index, '\t', perm, '\t', r
+            break
+        if len(perm) != len(set(perm)):
             print index, '\t', perm, '\t', r
             break
         #print index, '\t', perm, '\t', r
@@ -141,7 +147,6 @@ def main():
     r = rank(N, K, perm)
     print index, '\t', perm, '\t', r
     
-    " ""
     index = 52
     perm = [-1] * K
     unrank(N, K, index, perm)
@@ -154,7 +159,6 @@ def main():
     r = rank(N, K, perm)
     print index, '\t', perm, '\t', r
 
-    """
 
 
 
