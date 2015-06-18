@@ -78,20 +78,22 @@ def unrank(N, K, r, perm):
         for i in range(0, k):
             if perm_index[i] <= perm_index[k]:
                 perm[k] += 1
+        perm[k] = skip_dens[perm[k]]
         r = floor(r/(N-k))
 
 
 def rank(N, K, perm):
-    #r = use_right[perm[0]]
     perm[0] = use_right[perm[0]]
     r = perm[0]
+    for k in range(1, K):
+        perm[k] = use_dens[perm[k]]
+
     for k in range(1, K)[::-1]:
         q = perm[k]
         for i in range(0, k):
             if perm[i] < perm[k]:
                 q -= 1
         r += q * factorial[k]
-        #r += use_dens[q] * factorial[k]
     return r
 
 def main():
