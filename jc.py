@@ -78,12 +78,15 @@ def unrank(N, K, r, perm):
 
     for k in range(0, K):
         perm_index[k] = int(r % (N-k))
+        r = floor(r/(N-k))
+
+    for k in range(0, K):
         perm[k] = perm_index[k]
-        for i in range(0, k):
-            if perm_index[i] <= perm_index[k]:
+	for i in range(0, k)[::-1]:
+            #if perm_index[i] <= perm_index[k]:
+            if perm_index[i] <= perm[k]:
                 perm[k] += 1
         #perm[k] = skip_dens[perm[k]]
-        r = floor(r/(N-k))
 
     #print 'perm_index: ', perm_index
     #print 'perm: ', perm
@@ -107,7 +110,7 @@ def rank(N, K, perm):
 def main():
     print 'Jungle Checkers ranking'
 
-    N = 4 # Every digit in range [0, N-1]
+    N = 47 # Every digit in range [0, N-1]
     K = 3 # Permutation length
 
     # Precalculate faculty
@@ -129,16 +132,16 @@ def main():
         if index != r:
             print index, '\t', perm, '\t', r
             break
-        print index, '\t', perm, '\t', r
-
+        #print index, '\t', perm, '\t', r
     """
+
     index = 1
     perm = [-1] * K
     unrank(N, K, index, perm)
     r = rank(N, K, perm)
     print index, '\t', perm, '\t', r
     
-     " ""
+    " ""
     index = 52
     perm = [-1] * K
     unrank(N, K, index, perm)
@@ -152,6 +155,7 @@ def main():
     print index, '\t', perm, '\t', r
 
     """
+
 
 
     print 'done'
