@@ -66,9 +66,12 @@ use_dens = [
 
 def unrank(N, K, r, perm):
     perm_index = [0] * K
+    
     perm_index[0] = int(r % 26)
     r = floor(r/26)
     perm[0] = perm_index[0]
+    perm[0] = skip_right[perm[0]]
+    
     for k in range(1, K):
         perm_index[k] = int(r % (N-k))
         perm[k] = perm_index[k]
@@ -80,13 +83,13 @@ def unrank(N, K, r, perm):
 
 def rank(N, K, perm):
     #r = use_right[perm[0]]
+    perm[0] = use_right[perm[0]]
     r = perm[0]
     for k in range(1, K)[::-1]:
         q = perm[k]
         for i in range(0, k):
             if perm[i] < perm[k]:
                 q -= 1
-        #r += q * fac[N]/fac[N-k]
         r += q * factorial[k]
         #r += use_dens[q] * factorial[k]
     return r
