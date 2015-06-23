@@ -39,6 +39,7 @@ def rank(N, K, perm):
 
 def next_rank(N, K, perm_index):
     #print perm_index, 
+    """
     perm_index[0] += 1
     if perm_index[0] == N:
         perm_index[0] = 0
@@ -53,7 +54,7 @@ def next_rank(N, K, perm_index):
     while perm_index[i] == N-i:
         perm_index[i] = 0
         perm_index[i+1]+= 1
-    """
+        i += 1
 
 
     perm = [0]*K
@@ -73,7 +74,7 @@ def main():
     print 'Next ranking'
 
     N = 5 # Every digit in range [0, N-1]
-    K = 3 # Permutation length
+    K = 4 # Permutation length
 
     # Precalculate faculty
     global fac
@@ -85,12 +86,15 @@ def main():
 
 
     # Loop thru all permutations and test rank/unrank
-    perm = [0, 1, 2]
-    perm_index = [0, 0, 0]
+    perm = range(0, K)
+    perm_index = [0] * K
+    perm2 = [0]*K
     for index in range(0, factorial[K]-1):
     #for index in range(0, 100):
     #for index in range(0, fac[N]/fac[N-K]-1):
         #perm_index = unrank(N, K, index, perm)
+        #print perm, 
+        #unrank(N, K, index, perm)
         print perm
         perm = next_rank(N, K, perm_index)
         #print perm, 
