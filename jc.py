@@ -115,7 +115,7 @@ def rank(N, K, perm):
         #r += q * fac[N]/fac[N-k]
     return r
 
-def next_rank(N, K, perm_index):
+def next_rank(N, K, perm, perm_index):
     #print perm_index, 
     """
     perm_index[0] += 1
@@ -127,15 +127,20 @@ def next_rank(N, K, perm_index):
             perm_index[2] += 1
     """
 
-    i = 0
     perm_index[0] += 1
+    if perm_index[0] == 26:
+        perm_index[0] = 0
+        perm_index[1] += 1
+
+    i = 1
     while perm_index[i] == N-i:
         perm_index[i] = 0
         perm_index[i+1]+= 1
         i += 1
 
+    #print perm_index
 
-    perm = [0]*K
+    #perm = [0]*K
     for k in range(0, K):
         perm[k] = perm_index[k]
         i = k-1
@@ -146,13 +151,13 @@ def next_rank(N, K, perm_index):
 
     #print perm_index, perm
     #print perm
-    return perm
+    #return perm
 
 def main():
     print 'Jungle Checkers ranking'
 
     N = 47 # Every digit in range [0, N-1]
-    K = 2 # Permutation length
+    K = 3 # Permutation length
 
     # Precalculate faculty
     global fac
@@ -167,15 +172,17 @@ def main():
     perm_index = [0]*K
         
     # Loop thru all permutations and test rank/unrank
-    for index in range(0, factorial[K]):
+    #for index in range(0, factorial[K]-1):
+    index = 0
+    while index < factorial[K]-1:
+    #while index < 1:
     #for index in range(0, 100):
     #for index in range(0, fac[N]/fac[N-K]-1):
         #perm = [-1] * K
         #unrank(N, K, index, perm)
         print perm 
         #r = rank(N, K, perm)
-        perm = next_rank(N, K, perm_index)
-        print perm, 
+        next_rank(N, K, perm, perm_index)
         """
         print index, '\t', perm, '\t', r
         if index != r:
@@ -186,6 +193,9 @@ def main():
             break
         """
         #print index, '\t', perm, '\t', r
+        index += 1
+    #print perm
+    print index
     """
 
     index = 1
